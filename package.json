@@ -1,0 +1,27 @@
+{
+  "name": "proofxi",
+  "version": "0.0.1",
+  "private": true,
+  "description": "ProofXI — fantasy World Cup, trustlessly settled via TxLINE on-chain proofs",
+  "type": "module",
+  "scripts": {
+    "setup": "tsx scripts/setup.ts",
+    "setup:check": "tsx scripts/setup.ts check",
+    "setup:keygen": "tsx scripts/setup.ts keygen",
+    "setup:airdrop": "tsx scripts/setup.ts airdrop",
+    "setup:subscribe": "tsx scripts/setup.ts subscribe",
+    "setup:data": "tsx scripts/setup.ts data"
+  },
+  "dependencies": {
+    "@coral-xyz/anchor": "^0.31.1",
+    "@solana/spl-token": "^0.4.9",
+    "@solana/web3.js": "^1.98.0",
+    "axios": "^1.7.9",
+    "tweetnacl": "^1.0.3"
+  },
+  "devDependencies": {
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.3",
+    "@types/node": "^22.10.5"
+  }
+}

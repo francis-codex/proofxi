@@ -1,0 +1,41 @@
+# dependencies
+node_modules/
+
+# rust / anchor build artifacts
+target/
+.anchor/
+test-ledger/
+**/*.rs.bk
+
+# next / web build
+.next/
+out/
+dist/
+build/
+
+# env
+.env
+.env.*
+.env*.local
+*.log
+
+# secrets — keypairs, funded wallets, sessions, config
+keypairs/
+keypairs
+wallet.json
+*.keypair.json
+**/*keypair*.json
+**/*-keypair.json
+.txline-session.json
+.proofxi-config.json
+
+# working artifact pulled by scripts at repo root (frontend ships its own copy under web/data/)
+/proof-sample.json
+
+# private build notes / raw doc dumps (not for the public repo)
+CLAUDE.md
+HANDOFF.md
+docs/
+
+# os
+.DS_Store
