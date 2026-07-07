@@ -1,0 +1,174 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================
+   ProofXI design system — broadcast VAR × settlement terminal
+   near-monochrome ink + bone, two graphic colors used nowhere
+   else: confirm-green and overturn-red.
+   ============================================================ */
+
+:root {
+  --ink: #08090b;
+  --panel: #0e1013;
+  --panel-2: #14171c;
+  --line: #23272e;
+  --line-strong: #333842;
+
+  --bone: #ece7da;
+  --bone-dim: #9b968a;
+  --bone-mute: #625f57;
+
+  --confirm: #24f07c;
+  --overturn: #ff352e;
+
+  --font-display: var(--font-anton), "Arial Narrow", sans-serif;
+  --font-sans: var(--font-archivo), system-ui, sans-serif;
+  --font-mono: var(--font-jbmono), ui-monospace, monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  background: var(--ink);
+  color: var(--bone);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  font-feature-settings: "tnum" 1, "cv01" 1;
+}
+
+::selection {
+  background: var(--confirm);
+  color: var(--ink);
+}
+
+/* ---- broadcast field texture: quiet, only felt not seen ---- */
+.field-grid {
+  background-image:
+    linear-gradient(to right, rgba(236, 231, 218, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(236, 231, 218, 0.03) 1px, transparent 1px);
+  background-size: 44px 44px;
+}
+
+.scanline {
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0) 0px,
+    rgba(0, 0, 0, 0) 2px,
+    rgba(0, 0, 0, 0.16) 3px
+  );
+}
+
+/* diagonal hazard stripes — the review-overlay motif, used sparingly */
+.hazard {
+  background-image: repeating-linear-gradient(
+    -45deg,
+    var(--confirm) 0px,
+    var(--confirm) 10px,
+    transparent 10px,
+    transparent 20px
+  );
+}
+.hazard-red {
+  background-image: repeating-linear-gradient(
+    -45deg,
+    var(--overturn) 0px,
+    var(--overturn) 10px,
+    transparent 10px,
+    transparent 20px
+  );
+}
+
+/* ---- type roles ---- */
+.display {
+  font-family: var(--font-display);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 0.86;
+  text-transform: uppercase;
+}
+.mono {
+  font-family: var(--font-mono);
+  font-feature-settings: "tnum" 1, "zero" 1;
+}
+.micro {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--bone-dim);
+}
+.kicker {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+}
+
+/* hairline panel — the settlement-terminal chrome */
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--line);
+}
+.panel-inset {
+  background: var(--panel-2);
+  border: 1px solid var(--line);
+}
+
+.rule {
+  height: 1px;
+  background: var(--line);
+}
+
+/* a "live" pulse dot for the SSE feel */
+.livedot {
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: var(--confirm);
+  box-shadow: 0 0 0 0 rgba(36, 240, 124, 0.7);
+  animation: livepulse 1.8s ease-out infinite;
+}
+@keyframes livepulse {
+  0% { box-shadow: 0 0 0 0 rgba(36, 240, 124, 0.55); }
+  70% { box-shadow: 0 0 0 7px rgba(36, 240, 124, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(36, 240, 124, 0); }
+}
+
+/* the one loud gesture: the verdict stamp */
+.stamp-confirm {
+  color: var(--confirm);
+  border-color: var(--confirm);
+  text-shadow: 0 0 24px rgba(36, 240, 124, 0.35);
+}
+.stamp-overturn {
+  color: var(--overturn);
+  border-color: var(--overturn);
+  text-shadow: 0 0 24px rgba(255, 53, 46, 0.35);
+}
+
+/* subtle scanning sweep used during the review pass */
+@keyframes sweepdown {
+  0% { transform: translateY(-100%); opacity: 0; }
+  12% { opacity: 1; }
+  88% { opacity: 1; }
+  100% { transform: translateY(2400%); opacity: 0; }
+}
+.sweep {
+  animation: sweepdown 1.15s cubic-bezier(0.5, 0, 0.2, 1) forwards;
+}
+
+/* mono figures that tick without layout shift */
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+button {
+  font-family: var(--font-sans);
+}
