@@ -14,7 +14,25 @@ cpi = ["no-entrypoint"]
 no-entrypoint = []
 no-idl = []
 no-log-ix-name = []
+# Declared so Rust's check-cfg recognizes the cfgs Anchor's #[program]/#[derive(Accounts)]
+# macros emit; keeps `cargo check` quiet. No-op unless explicitly enabled.
+anchor-debug = []
+custom-heap = []
+custom-panic = []
+solana = []
 idl-build = ["anchor-lang/idl-build", "anchor-spl/idl-build"]
+
+[lints.rust]
+# Built for the Solana SBF target (target_os = "solana") via `cargo build-sbf`;
+# declare it so host-side `cargo check` / rust-analyzer don't flag Anchor's
+# entrypoint cfg as an unknown target_os value.
+unexpected_cfgs = { level = "warn", check-cfg = ['cfg(target_os, values("solana"))'] }
+# Anchor 0.31's #[program] codegen calls the deprecated AccountInfo::realloc
+# (Agave 3.0 renamed it to resize) — we never call it ourselves. Allowed via the
+# workspace lints table so both cargo AND rust-analyzer honor it (an inline
+# #![allow] isn't respected by rust-analyzer inside macro-expanded code).
+# Remove on the next Anchor bump.
+deprecated = "allow"
 
 [dependencies]
 anchor-lang = { version = "0.31.1", features = ["init-if-needed"] }

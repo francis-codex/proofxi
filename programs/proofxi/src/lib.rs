@@ -102,6 +102,7 @@ pub mod proofxi {
         let now = Clock::get()?.unix_timestamp;
         require!(now < round.lock_time, ProofxiError::RoundLocked);
         require!(picks.len() == round.markets.len(), ProofxiError::PickCount);
+        require!(picks.len() <= MAX_PICKS, ProofxiError::PickCount);
         require!((captain_index as usize) < picks.len(), ProofxiError::BadCaptain);
 
         token::transfer(
