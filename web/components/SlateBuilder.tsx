@@ -74,14 +74,14 @@ export default function SlateBuilder() {
               </button>
             </div>
 
-            <div className="mt-3 flex flex-wrap items-center gap-3">
+            <div className="mt-3 flex flex-wrap items-center gap-3 max-sm:justify-between">
               {/* YES / NO */}
               <div className="inline-flex border border-line">
                 {([true, false] as const).map((v) => (
                   <button
                     key={String(v)}
                     onClick={() => setPick(i, v)}
-                    className={`kicker px-4 py-1.5 transition-colors ${
+                    className={`kicker px-5 py-2.5 transition-colors sm:px-4 sm:py-1.5 ${
                       picks[i] === v
                         ? v
                           ? "bg-bone text-ink"
@@ -101,7 +101,7 @@ export default function SlateBuilder() {
                   <button
                     key={w}
                     onClick={() => setWeight(i, w)}
-                    className={`mono h-7 w-8 border text-[12px] transition-colors ${
+                    className={`mono h-9 w-10 border text-[13px] transition-colors sm:h-7 sm:w-8 sm:text-[12px] ${
                       weights[i] === w
                         ? "border-confirm text-confirm"
                         : "border-line text-bone-dim hover:border-line-strong"
@@ -118,8 +118,8 @@ export default function SlateBuilder() {
 
       {/* entry summary */}
       <div className="relative border-t border-line bg-panel2/60 px-5 py-4 sm:px-8">
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          <div className="flex items-center gap-5">
+        <div className="flex flex-wrap items-center justify-between gap-4">
+          <div className="flex items-center gap-5 max-sm:w-full max-sm:justify-between max-sm:gap-3">
             <Summ k="MAX SCORE" v={String(totalWeight)} />
             <Summ k="CAPTAIN" v={`M${captain + 1} · 2×`} />
             <Summ k="ESCROW" v={`${ROUND.entryFee} USDC`} />
@@ -127,7 +127,7 @@ export default function SlateBuilder() {
           <button
             onClick={() => setEntered(true)}
             disabled={entered}
-            className="kicker inline-flex items-center gap-2 border border-confirm bg-confirm px-5 py-2.5 text-ink transition-opacity disabled:opacity-50"
+            className="kicker inline-flex items-center justify-center gap-2 border border-confirm bg-confirm px-5 py-3 text-ink transition-opacity disabled:opacity-50 max-sm:w-full sm:py-2.5"
           >
             {entered ? "SLATE COMMITTED ✓" : "ENTER SLATE ▸"}
           </button>
@@ -176,9 +176,9 @@ export default function SlateBuilder() {
 
 function Stat({ k, v }: { k: string; v: string }) {
   return (
-    <div className="px-5 py-3 text-center sm:px-8">
+    <div className="px-2 py-3 text-center sm:px-8">
       <div className="micro">{k}</div>
-      <div className="display mt-1 text-[22px] sm:text-[26px]">{v}</div>
+      <div className="display mt-1 text-[20px] sm:text-[26px]">{v}</div>
     </div>
   );
 }

@@ -105,7 +105,7 @@ export default function LiveMatchCard() {
           <span className="micro">EVENT FEED</span>
           <span className="micro">FIXTURE {FIXTURE.id}</span>
         </div>
-        <div className="relative h-[232px] overflow-hidden border-t border-line">
+        <div className="relative h-[190px] overflow-hidden border-t border-line sm:h-[232px]">
           {conn === "idle" && feed.length === 0 && (
             <div className="flex h-full items-center justify-center">
               <span className="mono text-[12px] text-bone-mute">stream idle — kick off to receive TxLINE events</span>

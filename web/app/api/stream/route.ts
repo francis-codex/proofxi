@@ -9,6 +9,9 @@ import { FEED, TICK_MS } from "@/lib/matchFeed";
 
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
+// The replay stream runs ~7s; give generous headroom so a serverless
+// function timeout can never truncate the live SSE feed on Vercel.
+export const maxDuration = 30;
 
 export async function GET() {
   const encoder = new TextEncoder();

@@ -5,7 +5,7 @@ import Leaderboard from "@/components/Leaderboard";
 
 export default function Home() {
   return (
-    <main className="relative min-h-screen">
+    <main className="relative min-h-screen overflow-x-clip">
       <div className="pointer-events-none fixed inset-0 scanline opacity-[0.35]" />
 
       {/* masthead */}
@@ -31,7 +31,7 @@ export default function Home() {
       {/* statement */}
       <section className="relative mx-auto max-w-6xl px-5 pt-10 sm:px-8 sm:pt-14">
         <p className="kicker text-bone-dim">PREDICTION MARKETS &amp; SETTLEMENT · TXLINE WORLD CUP</p>
-        <h1 className="display mt-4 max-w-3xl text-[33px] leading-[1.07] sm:text-[64px] sm:leading-[0.98]">
+        <h1 className="display mt-4 max-w-3xl text-[32px] !leading-[1.16] sm:text-[64px] sm:!leading-[0.98]">
           EVERY RESULT GOES TO <span className="text-confirm">VAR</span>.
           <br className="hidden sm:block" /> THE CHAIN MAKES THE CALL.
         </h1>

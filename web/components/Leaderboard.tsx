@@ -39,10 +39,10 @@ export default function Leaderboard() {
                   proven vs {short(m.proofHash, 6, 6)}
                 </div>
               </div>
-              <span className={`mono text-[13px] ${m.outcome ? "text-confirm" : "text-bone-dim"}`}>
+              <span className={`mono shrink-0 text-[13px] ${m.outcome ? "text-confirm" : "text-bone-dim"}`}>
                 {m.outcome ? "YES" : "NO"}
               </span>
-              <span className="mono flex h-6 items-center gap-1.5 border border-confirm/60 px-2 text-[10px] tracking-[0.1em] text-confirm">
+              <span className="mono flex h-6 shrink-0 items-center gap-1.5 border border-confirm/60 px-2 text-[10px] tracking-[0.1em] text-confirm">
                 <span className="block h-1.5 w-1.5 rounded-full bg-confirm" /> CONFIRMED
               </span>
               <a
@@ -66,7 +66,7 @@ export default function Leaderboard() {
             <div key={r.handle}>
               <button
                 onClick={() => setOpen(isOpen ? null : r.handle)}
-                className="flex w-full items-center gap-3 px-5 py-4 text-left transition-colors hover:bg-panel2/40 sm:gap-4 sm:px-8"
+                className="flex w-full items-center gap-2.5 px-5 py-4 text-left transition-colors hover:bg-panel2/40 sm:gap-4 sm:px-8"
               >
                 <span className={`display text-[22px] ${r.isWinner ? "text-confirm" : "text-bone-dim"}`}>
                   {r.rank}
@@ -84,12 +84,12 @@ export default function Leaderboard() {
                     captain M{r.captain + 1} · {r.picks.map((p) => (p ? "Y" : "N")).join("")}
                   </div>
                 </div>
-                <div className="text-right">
-                  <div className="display tabular text-[26px] leading-none">{r.score}</div>
+                <div className="shrink-0 text-right">
+                  <div className="display tabular text-[22px] leading-none sm:text-[26px]">{r.score}</div>
                   <div className="micro mt-1">POINTS</div>
                 </div>
-                <div className="w-24 text-right">
-                  <div className={`mono tabular text-[15px] ${r.payout > 0 ? "text-confirm" : "text-bone-mute"}`}>
+                <div className="w-[68px] shrink-0 text-right sm:w-24">
+                  <div className={`mono tabular text-[13px] sm:text-[15px] ${r.payout > 0 ? "text-confirm" : "text-bone-mute"}`}>
                     {r.payout > 0 ? `+${r.payout}` : "0"} USDC
                   </div>
                   <div className="micro mt-1">PAYOUT</div>

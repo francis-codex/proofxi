@@ -204,7 +204,7 @@ export default function VarReceipt() {
         <button
           onClick={run}
           disabled={phase === "engage" || phase === "reveal"}
-          className="group relative inline-flex items-center gap-2 border border-confirm bg-confirm px-5 py-2.5 text-ink transition-opacity disabled:opacity-40"
+          className="group relative inline-flex items-center justify-center gap-2 border border-confirm bg-confirm px-5 py-3 text-ink transition-opacity disabled:opacity-40 max-sm:w-full sm:py-2.5"
         >
           <span className="kicker text-ink">
             {phase === "idle" ? "RUN VAR REVIEW" : phase === "verdict" ? "REVIEW AGAIN" : "REVIEWING…"}
@@ -404,7 +404,7 @@ function ModeToggle({
   disabled: boolean;
 }) {
   return (
-    <div className="inline-flex border border-line">
+    <div className="flex border border-line max-sm:w-full">
       {(["honest", "adversarial"] as Mode[]).map((m) => {
         const active = mode === m;
         return (
@@ -412,7 +412,7 @@ function ModeToggle({
             key={m}
             disabled={disabled}
             onClick={() => setMode(m)}
-            className={`kicker px-3.5 py-2.5 transition-colors disabled:opacity-40 ${
+            className={`kicker px-3.5 py-3 transition-colors disabled:opacity-40 max-sm:flex-1 sm:py-2.5 ${
               active
                 ? m === "adversarial"
                   ? "bg-overturn text-ink"
