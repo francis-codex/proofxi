@@ -1,6 +1,6 @@
 /**
  * Genuine Server-Sent-Events endpoint. Replays the TxLINE scores-stream for
- * fixture 18257865 as real SSE (text/event-stream) so the client consumes it
+ * fixture 18188721 as real SSE (text/event-stream) so the client consumes it
  * with a native EventSource — the same transport TxLINE's live scores use.
  * Data is replayed (allowed for the demo); the connection is real.
  */
@@ -26,7 +26,7 @@ export async function GET() {
 
       // handshake — mirrors the stream opening with the fixture context
       send("open", {
-        fixtureId: 18257865,
+        fixtureId: 18188721,
         source: "TxLINE · scores stream (replay)",
         ts: Date.now(),
       });

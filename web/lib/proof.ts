@@ -1,11 +1,10 @@
 /**
- * Shapes the REAL TxLINE proof (web/data/proof-sample.json, fixture 18257865,
- * France 4–0 England) into the evidence layers the VAR receipt reveals.
+ * Shapes the REAL TxLINE proof (web/data/proof-sample.json, fixture 18188721,
+ * Paraguay 0–0 France) into the evidence layers the VAR receipt reveals.
  * Nothing here is invented — every hash is the hex of the actual proof bytes
- * pulled from the deployed Txoracle snapshot, and the same proof was replayed
- * on-chain through validate_stat (see scripts/verify-proof.ts). The adversarial
- * path tampers a single leaf byte, which breaks the Merkle path exactly as the
- * on-chain check does (see scripts/adversarial.ts cheat #1 → InvalidStatProof).
+ * pulled from the deployed Txoracle snapshot. The adversarial path tampers a
+ * single leaf byte, which breaks the Merkle path exactly as the on-chain
+ * check does (see scripts/adversarial.ts cheat #1 → InvalidStatProof).
  */
 
 import raw from "@/data/proof-sample.json";
@@ -21,12 +20,12 @@ export const CHAIN = {
 
 export const FIXTURE = {
   id: raw.summary.fixtureId,
-  home: { code: "FRA", name: "France" },
-  away: { code: "ENG", name: "England" },
+  home: { code: "PAR", name: "Paraguay" },
+  away: { code: "FRA", name: "France" },
   homeGoals: raw.statToProve.value, // key 1002
   awayGoals: raw.statToProve2.value, // key 1003
   competition: "FIFA WORLD CUP",
-  stage: "MATCHDAY · JUL 18",
+  stage: "GROUP STAGE · MD2",
 } as const;
 
 function toHex(bytes: number[]): string {
@@ -60,11 +59,11 @@ export type EvidenceLayer = {
 };
 
 export const MARKET = {
-  proposition: "FRANCE TO WIN",
-  formula: "STAT[1002] − STAT[1003] > 0",
+  proposition: "SCORES LEVEL AT REVIEW",
+  formula: "STAT[1002] − STAT[1003] == 0",
   statKeyA: 1002,
   statKeyB: 1003,
-  comparison: "GREATER_THAN",
+  comparison: "EQUAL_TO",
   threshold: 0,
 } as const;
 
@@ -131,6 +130,6 @@ export function evidenceLayers(mode: "honest" | "adversarial"): EvidenceLayer[] 
   ];
 }
 
-// the honest run resolves TRUE against the real 4–0 data (home>away),
+// the honest run resolves TRUE against the real 0–0 data (home==away),
 // the adversarial run never reaches a verdict — the chain rejects the leaf.
 export const RAW_TS = raw.ts;

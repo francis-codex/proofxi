@@ -430,19 +430,7 @@ async function phaseData() {
     | { fixture: any; seq: number; statKeys: number[]; record: any }
     | null = null;
 
-  // Optional deterministic pin: TARGET_FIXTURE=<id> forces that fixture first.
-  const targetFixture = process.env.TARGET_FIXTURE
-    ? Number(process.env.TARGET_FIXTURE)
-    : null;
-  const searchOrder = targetFixture
-    ? [
-        ...scanOrder.filter((f) => Number(f.FixtureId) === targetFixture),
-        ...scanOrder.filter((f) => Number(f.FixtureId) !== targetFixture),
-      ]
-    : scanOrder;
-  if (targetFixture) info(`TARGET_FIXTURE pinned → #${targetFixture}`);
-
-  for (const f of searchOrder) {
+  for (const f of scanOrder) {
     const fixtureId = Number(f.FixtureId);
     let snap: any;
     try {

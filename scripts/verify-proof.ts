@@ -174,9 +174,8 @@ async function main() {
     }
   }
 
-  // fixture 18257865 = France 4–0 England → home score (1002) is 4.
-  const r1 = await run("score(1002) EqualTo 0", { equalTo: {} }, 0, false);
-  const r2 = await run("score(1002) GreaterThan 0", { greaterThan: {} }, 0, true);
+  const r1 = await run("score(1002) EqualTo 0", { equalTo: {} }, 0, true);
+  const r2 = await run("score(1002) GreaterThan 0", { greaterThan: {} }, 0, false);
 
   step("Verdict");
   if (r1 && r2) {
