@@ -1,37 +1,75 @@
 # ProofXI
 
-**VAR for prediction markets.** A fantasy World Cup pick'em where every result
-goes to an on-chain review that is final and cannot be rigged — settled
-trustlessly by TxLINE cryptographic proofs on Solana.
+### VAR for prediction markets — results settled by on-chain proof, not by an operator.
 
-Built for the TxODDS World Cup hackathon — *Prediction Markets & Settlement* track.
+![ProofXI — every result goes to VAR, the chain makes the call](assets/screenshots/hero.png)
 
-> Like football's VAR reviews a call and makes it incontestable, ProofXI reviews
-> the stat and settles the market trustlessly. The name is the mechanic.
+ProofXI is a fantasy World Cup pick'em where the final call on every market is
+made by a cryptographic proof settled on Solana — not by a company you have to
+trust. A stat finalizes, the market goes to review, and the chain makes the call.
+Final, and impossible to rig.
 
-- **What it does:** enter a slate of boolean markets, escrow test-USDC, and when
-  the match finalizes each outcome is proven on-chain via TxLINE's `validate_stat`
-  and the pot is paid out — no operator, no keeper, no trust.
-- **The demo beat:** the *VAR receipt* unfolds the Merkle evidence and stamps
-  `CONFIRMED`. Flip to **TRY TO RIG IT** and the identical flow with a tampered
-  input gets `OVERTURNED` — the chain rejects the cheat.
+**[Open the live demo → proofxi.vercel.app](https://proofxi.vercel.app)** &nbsp;·&nbsp;
+[Watch the film](./DEMO.md) &nbsp;·&nbsp; [How it's built](./TECH.md)
 
-Full architecture and the TxLINE endpoints used: [`TECH.md`](./TECH.md).
-Demo film script: [`DEMO.md`](./DEMO.md).
+Built for the TxODDS World Cup hackathon — *Prediction Markets & Settlement*.
 
 ---
 
-## Repo layout
+## Every prediction market claims "provably fair." ProofXI shows the proof — and shows it rejecting a cheat, live.
+
+Most markets settle behind closed doors: an operator reads a feed and credits the
+winners, and you trust that they did it honestly. ProofXI makes the settlement
+itself verifiable. Every result is reviewed on-chain against a signed TxLINE
+proof, and anyone can watch the review resolve.
+
+### The review — honest vs. rigged
+
+| An honest result is **CONFIRMED** | A tampered one is **OVERTURNED** |
+| :--- | :--- |
+| ![Honest run confirmed on-chain](assets/screenshots/review-confirmed.png) | ![Tampered run overturned by the chain](assets/screenshots/review-overturned.png) |
+| The evidence stack checks out — leaf, path, root, signed snapshot — and `validate_stat` returns true. Funds are released to the winners. | Tamper the stat to move the payout and the recomputed root no longer matches TxLINE's signed root. `validate_stat` aborts, the escrow stays locked, the cheat is rejected. |
+
+That is the whole product in one gesture: the *same* flow, run twice. An honest
+input confirms; a tampered input is thrown out — by the chain, not by us. No
+keeper, no admin, nothing to trust.
+
+---
+
+## How it works
+
+**1 — Real data in.** A live TxLINE scores feed streams over server-sent events
+until the match finalizes and the stat is sealed, Merkle-proven by TxLINE.
+
+![Live TxLINE scores stream](assets/screenshots/live.png)
+
+**2 — Build a slate.** Pick a set of boolean markets, weight them, captain one for
+2×, and escrow test-USDC into the round vault. That maps to `proofxi::enter`,
+real on devnet.
+
+![Slate builder](assets/screenshots/slate.png)
+
+**3 — Settlement & payout.** Each outcome is proven on-chain via `validate_stat`
+and the pot is paid by `proofxi::payout` — winner-take-all, ties split, dust
+stays in the vault. Every call carries the proof root it was settled against.
+
+![Settlement and payout leaderboard](assets/screenshots/settlement.png)
+
+---
+
+## For developers
+
+### Repo layout
 
 ```
-web/          Next.js frontend (the deployed site)
-programs/     Anchor programs — proofxi (settlement) + proof_verifier (CPI de-risk)
+web/          Next.js frontend — the deployed site
+programs/     Anchor programs: proofxi (settlement) + proof_verifier (CPI de-risk)
 scripts/      devnet proving scripts (setup, phase3 round, adversarial)
-docs/         TxLINE API reference dumps
-proof-sample.json   a real stat-validation proof pulled on devnet
+idl/          on-chain IDLs
+assets/       README screenshots
 ```
 
-## Run the site locally
+### Run the site locally
 
 ```bash
 cd web
@@ -40,35 +78,32 @@ npm run dev        # http://localhost:3000
 ```
 
 The live match card streams over a real SSE endpoint (`/api/stream`); the slate
-builder and leaderboard read the deployed program + test-USDC mint live from
-Solana devnet.
+builder and leaderboard read the deployed program and test-USDC mint live from
+Solana devnet. No environment variables required — the site reads public devnet
+state and ships a real TxLINE proof in the bundle.
 
-## Deploy to Vercel
+### Deploy to Vercel
 
-The Next app lives in `web/`. In the Vercel project settings:
-
-- **Root Directory:** `web`
-- Framework preset: **Next.js** (auto-detected)
-- Build command / install: defaults
+Root directory is `web/` (framework auto-detected as Next.js).
 
 ```bash
-# or from the CLI, inside web/
 cd web && npx vercel --prod
 ```
 
-No environment variables are required — the site reads public devnet state and
-replays a real TxLINE proof shipped in the bundle.
-
-## Reproduce the on-chain proof (optional)
+### Reproduce the on-chain proof (optional)
 
 ```bash
 npm install                       # root deps (anchor, web3.js, spl-token)
-npm run setup                     # TxLINE auth → subscribe → pull a real proof
-npx tsx scripts/phase3.ts         # create_round → enter → settle (CPI) → payout
+npm run setup                     # TxLINE auth -> subscribe -> pull a real proof
+npx tsx scripts/verify-proof.ts   # replay the proof through validate_stat on devnet
+npx tsx scripts/phase3.ts         # create_round -> enter -> settle (CPI) -> payout
 npx tsx scripts/adversarial.ts    # three cheats, each reverts on devnet
 ```
 
 ---
 
-Solana **devnet** only. Test-USDC is clearly labelled test money with a
-self-serve faucet. Built fresh with public libraries.
+Solana **devnet** only. The scorelines shown are TxLINE devnet demo data — the
+proofs are genuine and verified on-chain; ProofXI proves that settlement
+faithfully follows the signed oracle and cannot be tampered, not that the oracle
+mirrors any real-world result. Test-USDC is clearly labelled test money. Built
+fresh with public libraries, attributed in [`TECH.md`](./TECH.md).
