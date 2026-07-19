@@ -35,7 +35,7 @@ wallet.json
 # private build notes / raw doc dumps (not for the public repo)
 CLAUDE.md
 HANDOFF.md
-docs/
+/docs/
 
 # os
 .DS_Store
