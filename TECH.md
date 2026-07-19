@@ -35,7 +35,6 @@ Base origin (devnet): `https://txline-dev.txodds.com`
 | Scores snapshot (per fixture) | `GET` | `/api/scores/snapshot/{fixtureId}` |
 | **Merkle stat-validation proof** | `GET` | `/api/scores/stat-validation` |
 | **Real-time scores stream (SSE)** | `GET` | `/api/scores/stream` |
-| Merkle proof for fixture statistics | `GET` | see `docs/tx-get-a-merkle-proof-for-fixture-statistics.md` |
 
 On-chain data subscription is via the Txoracle program's `subscribe`
 instruction (free World Cup tier: `serviceLevelId=1`, `durationWeeks=4`).

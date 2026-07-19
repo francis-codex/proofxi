@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Anton, Archivo, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
+import SiteHeader from "@/components/SiteHeader";
+import SiteFooter from "@/components/SiteFooter";
 
 const anton = Anton({
   weight: "400",
@@ -34,7 +36,14 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${anton.variable} ${archivo.variable} ${jbmono.variable}`}>
-      <body>{children}</body>
+      <body>
+        <div className="relative min-h-screen overflow-x-clip">
+          <div className="pointer-events-none fixed inset-0 scanline opacity-[0.35]" />
+          <SiteHeader />
+          {children}
+          <SiteFooter />
+        </div>
+      </body>
     </html>
   );
 }

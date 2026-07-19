@@ -1,35 +1,10 @@
-import VarReceipt from "@/components/VarReceipt";
-import LiveMatchCard from "@/components/LiveMatchCard";
-import SlateBuilder from "@/components/SlateBuilder";
-import Leaderboard from "@/components/Leaderboard";
+import Link from "next/link";
 
 export default function Home() {
   return (
-    <main className="relative min-h-screen overflow-x-clip">
-      <div className="pointer-events-none fixed inset-0 scanline opacity-[0.35]" />
-
-      {/* masthead */}
-      <header className="relative border-b border-line">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-5 py-4 sm:px-8">
-          <div className="flex items-baseline gap-3">
-            <span className="display text-[26px] tracking-[-0.02em]">PROOF<span className="text-confirm">XI</span></span>
-            <span className="micro hidden sm:inline">VAR FOR PREDICTION MARKETS</span>
-          </div>
-          <nav className="flex items-center gap-4 sm:gap-5">
-            <a className="kicker text-bone-dim transition-colors hover:text-bone" href="#live">LIVE</a>
-            <a className="kicker text-bone-dim transition-colors hover:text-bone" href="#review">REVIEW</a>
-            <a className="kicker hidden text-bone-dim transition-colors hover:text-bone sm:inline" href="#slate">SLATE</a>
-            <a className="kicker hidden text-bone-dim transition-colors hover:text-bone sm:inline" href="#payout">PAYOUT</a>
-            <span className="hidden items-center gap-2 sm:flex">
-              <span className="livedot" />
-              <span className="micro text-confirm">DEVNET LIVE</span>
-            </span>
-          </nav>
-        </div>
-      </header>
-
+    <main className="relative">
       {/* statement */}
-      <section className="relative mx-auto max-w-6xl px-5 pt-10 sm:px-8 sm:pt-14">
+      <section className="relative mx-auto max-w-6xl px-5 pt-10 sm:px-8 sm:pt-16">
         <p className="kicker text-bone-dim">PREDICTION MARKETS &amp; SETTLEMENT · TXLINE WORLD CUP</p>
         <h1 className="display mt-4 max-w-3xl text-[32px] !leading-[1.16] sm:text-[64px] sm:!leading-[0.98]">
           EVERY RESULT GOES TO <span className="text-confirm">VAR</span>.
@@ -39,46 +14,38 @@ export default function Home() {
           A stat finalizes, the market goes to review, and the call is made by a
           proof settled on-chain — not an operator. Final, and impossible to rig.
         </p>
-      </section>
-
-      {/* live match — the TxLINE scores stream ticking */}
-      <section id="live" className="relative mx-auto max-w-4xl px-5 pt-9 sm:px-8 sm:pt-11">
-        <div className="mb-3 flex items-center justify-between">
-          <span className="kicker text-bone-dim">01 · LIVE MATCH</span>
-          <span className="micro">TXLINE SCORES STREAM</span>
+        <div className="mt-7 flex flex-wrap items-center gap-3">
+          <Link
+            href="/review"
+            className="kicker inline-flex items-center gap-2 border border-confirm bg-confirm px-5 py-3 text-ink"
+          >
+            SEE THE REVIEW ▸
+          </Link>
+          <Link
+            href="/docs"
+            className="kicker inline-flex items-center gap-2 border border-line px-5 py-3 text-bone transition-colors hover:border-line-strong"
+          >
+            TECHNICAL DOCS
+          </Link>
         </div>
-        <LiveMatchCard />
       </section>
 
-      {/* the money shot */}
-      <section id="review" className="relative mx-auto max-w-4xl px-5 pt-14 sm:px-8 sm:pt-16">
-        <div className="mb-3 flex items-center justify-between">
-          <span className="kicker text-confirm">02 · THE REVIEW</span>
-          <span className="micro">ON-CHAIN · VALIDATE_STAT</span>
+      {/* the four stages, each its own page */}
+      <section className="relative mx-auto max-w-6xl px-5 pt-16 sm:px-8 sm:pt-20">
+        <div className="mb-4 flex items-center justify-between">
+          <span className="kicker text-bone-dim">THE FLOW</span>
+          <span className="micro">EACH STAGE IS ITS OWN VIEW</span>
         </div>
-        <VarReceipt />
-      </section>
-
-      {/* slate builder — enter the round, escrow USDC */}
-      <section id="slate" className="relative mx-auto max-w-4xl px-5 pt-14 sm:px-8 sm:pt-16">
-        <div className="mb-3 flex items-center justify-between">
-          <span className="kicker text-bone-dim">03 · BUILD YOUR SLATE</span>
-          <span className="micro">CREATE_ROUND · ENTER</span>
+        <div className="grid gap-px border border-line bg-line sm:grid-cols-2 lg:grid-cols-4">
+          <StageCard href="/live" n="01" head="LIVE MATCH" body="The TxLINE scores stream ticks in over SSE until the stat is sealed." />
+          <StageCard href="/review" n="02" head="THE REVIEW" body="Send the stat to VAR — validate_stat confirms it, or rejects a tamper." accent />
+          <StageCard href="/slate" n="03" head="BUILD A SLATE" body="Pick, weight, captain, and escrow test-USDC into the round vault." />
+          <StageCard href="/payout" n="04" head="SETTLEMENT" body="Every outcome proven on-chain, scored, and paid winner-take-all." />
         </div>
-        <SlateBuilder />
       </section>
 
-      {/* payout + leaderboard */}
-      <section id="payout" className="relative mx-auto max-w-4xl px-5 pt-14 sm:px-8 sm:pt-16">
-        <div className="mb-3 flex items-center justify-between">
-          <span className="kicker text-bone-dim">04 · SETTLEMENT &amp; PAYOUT</span>
-          <span className="micro">SCORE · PAYOUT</span>
-        </div>
-        <Leaderboard />
-      </section>
-
-      {/* how it works — thin explainer, not gradient cards */}
-      <section id="how" className="relative mx-auto max-w-6xl px-5 pt-24 sm:px-8">
+      {/* how it works — thin explainer */}
+      <section className="relative mx-auto max-w-6xl px-5 pt-20 sm:px-8">
         <div className="rule" />
         <div className="grid gap-px border-line md:grid-cols-3">
           <Explain
@@ -99,16 +66,37 @@ export default function Home() {
         </div>
         <div className="rule" />
       </section>
-
-      <footer className="relative mx-auto max-w-6xl px-5 py-14 sm:px-8">
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          <span className="micro">PROOFXI · BUILT ON TXLINE · SOLANA DEVNET</span>
-          <span className="mono text-[11px] text-bone-mute">
-            settlement you can audit, not a scoreboard you have to trust
-          </span>
-        </div>
-      </footer>
     </main>
+  );
+}
+
+function StageCard({
+  href,
+  n,
+  head,
+  body,
+  accent,
+}: {
+  href: string;
+  n: string;
+  head: string;
+  body: string;
+  accent?: boolean;
+}) {
+  return (
+    <Link
+      href={href}
+      className="group relative flex flex-col justify-between gap-6 bg-panel p-6 transition-colors hover:bg-panel2/60 sm:p-7"
+    >
+      <span className={`mono text-[11px] tracking-[0.2em] ${accent ? "text-confirm" : "text-bone-mute"}`}>{n}</span>
+      <div>
+        <h3 className="display text-[22px]">{head}</h3>
+        <p className="mt-2 text-[13px] leading-relaxed text-bone-dim">{body}</p>
+        <span className="kicker mt-4 inline-block text-confirm opacity-0 transition-opacity group-hover:opacity-100">
+          OPEN ▸
+        </span>
+      </div>
+    </Link>
   );
 }
 

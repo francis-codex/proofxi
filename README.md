@@ -9,8 +9,8 @@ made by a cryptographic proof settled on Solana — not by a company you have to
 trust. A stat finalizes, the market goes to review, and the chain makes the call.
 Final, and impossible to rig.
 
-**[Open the live demo → proofxi.vercel.app](https://proofxi.vercel.app)** &nbsp;·&nbsp;
-[Watch the film](./DEMO.md) &nbsp;·&nbsp; [How it's built](./TECH.md)
+**[Open the live app → proofxi.vercel.app](https://proofxi.vercel.app)** &nbsp;·&nbsp;
+[Technical documentation](https://proofxi.vercel.app/docs) &nbsp;·&nbsp; [How it's built](./TECH.md)
 
 Built for the TxODDS World Cup hackathon — *Prediction Markets & Settlement*.
 

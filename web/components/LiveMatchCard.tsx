@@ -156,7 +156,7 @@ export default function LiveMatchCard() {
                 </div>
               </div>
               <a
-                href="#review"
+                href="/review"
                 className="kicker inline-flex shrink-0 items-center gap-2 border border-confirm bg-confirm px-4 py-2.5 text-ink"
               >
                 SEND TO VAR ▸

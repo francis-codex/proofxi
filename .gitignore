@@ -39,3 +39,6 @@ docs/
 
 # os
 .DS_Store
+
+# internal video script — not for the public repo
+DEMO.md
