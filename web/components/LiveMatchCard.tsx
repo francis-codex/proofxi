@@ -11,6 +11,7 @@ const KIND_TAG: Record<FeedKind, { t: string; cls: string }> = {
   KICKOFF: { t: "KO", cls: "border-line text-bone" },
   SHOT: { t: "SHOT", cls: "border-line text-bone-dim" },
   ON_TARGET: { t: "SOT", cls: "border-bone/40 text-bone" },
+  GOAL: { t: "GOAL", cls: "border-confirm bg-confirm/10 text-confirm" },
   CORNER: { t: "COR", cls: "border-line text-bone-dim" },
   SAVE: { t: "SAVE", cls: "border-confirm/50 text-confirm" },
   YELLOW: { t: "YEL", cls: "border-[#e8b923]/60 text-[#e8b923]" },
@@ -152,7 +153,7 @@ export default function LiveMatchCard() {
               <div className="min-w-0">
                 <div className="kicker text-confirm">STAT SEALED · READY FOR REVIEW</div>
                 <div className="mono mt-1.5 text-[11px] text-bone-dim">
-                  1002 HOME_GOALS=0 · 1003 AWAY_GOALS=0 · PERIOD FT — Merkle-proven by TxLINE
+                  1002 HOME_GOALS=4 · 1003 AWAY_GOALS=0 · PERIOD FT — Merkle-proven by TxLINE
                 </div>
               </div>
               <a
